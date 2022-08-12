@@ -144,13 +144,14 @@ $$P(the|Spam) = \frac{0 + 1}{7 + 1\cdot 9} = \frac{1}{16}$$
 $$P(money|Non\ Spam) = \frac{0 + 1}{9 + 1\cdot 9} = \frac{1}{18}$$
 $$P(secret|Spam) = \frac{4+1}{7+9} = \frac{5}{16}$$
 $$P(secret|Non\ Spam) = \frac{2 + 1}{9 + 9} = \frac{1}{6}$$
-$$P(the|Non\ Spam) = \frac{1 + 1}{9 + 9} = \frac{1}{9}
+$$P(the|Non\ Spam) = \frac{1 + 1}{9 + 9} = \frac{1}{9}$$
 $$P(money|Spam) = \frac{4+1}{7+9} = \frac{5}{16}$$
 So we get that
 $$P(Spam|secret, code, to, unlock, the, money) =$$
 $$= P(secret|Spam)P(code|Spam)P(to|Spam)P(unlock|Spam)P(the|Spam)P(money|Spam)P(Spam) = 0.001831$$
 $$P(Non\ Spam|secret, code, to, unlock, the, money) =$$
-$$= P(secret|Non\ Spam)P(code|Non\ Spam)P(to|Non\ Spam)P(unlock|Non\ Spam)P(the|Non\ Spam)P(money|Non\ Spam)P(Non\ Spam) = 0.000514$$
+$$= P(secret|Non\ Spam)P(code|Non\ Spam)P(to|Non\ Spam)\cdot$$
+$$\cdot P(unlock|Non\ Spam)P(the|Non\ Spam)P(money|Non\ Spam)P(Non\ Spam) = 0.000514$$
 
 So, given the updated probability values, we can now classify the message as "spam". Note that we obviously didn't calculate probabilities for the missing words, such as "code" or "unlock".
 

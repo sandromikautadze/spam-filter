@@ -1,5 +1,7 @@
 # Spam Filter Using Naive Bayes
 
+**NOTE**: *when viewed from a phone, this file may **not** be displayed at its best due to the formatting of some math formulas. It is suggested to view the file from a computer.*
+
 ### Table of Contents
 * [Introduction](#introduction)
 * [Some Necessary Math Review](#some-necessary-math-review)
@@ -9,10 +11,11 @@
 * [Limitations of the Naive Bayes model](#limitations-of-the-naive-bayes-model)
 * [Findings](#findings)
 * [Methods of Improvement](methods-of-improvement)
+* [Curiosities](#curiosities)
 
 ## Introduction
 
-*To be written*
+**TBA**
 
 ## Some Necessary Math Review
 
@@ -26,11 +29,11 @@ Let's do some review of the crucial topics needed to understand what Naive Bayes
     $$P(B|A) = \frac{P(A|B)P(B)}{P(A)}$$ In Bayesian terms we can also state the theorem as
     $$posterior = \frac{likelihood \cdot prior}{evidence}$$ Using LTT we can also restate the theorem in another form:
     $$P(B_i|A) = \frac{P(A|B_i)P(B_i)}{P(A)} = \frac{P(A|B_i)P(B_i)}{\sum_{j\in \{1,\dots,n\} } P(A|B_j)P(B_j)}$$
-* **Conditional Independence**: Let $A$, $B$ and $C$ be three events of a sample space $\Omega$. We say that $A$ and $B$ are conditionally independent given $C$, with $P(C)>0$ if
+* **Conditional Independence**: Let $A$, $B$ and $C$ be three events of a sample space $\Omega$. We say that $A$ and $B$ are conditionally independent given $C$, with $P(C)>0$, if
     $$P(A|B,C) = P(A|C)$$ An alternative characterization of conditional independence is the following:
     $$P(A,B|C) = P(A|C)P(B|C)$$ More generally, if some events $A_1, A_2, \dots, A_n$ are conditionally independent given $B$, then
     $$P(A_1, A_2, \dots, A_n |B) = \prod_{i = 1}^{n}P(A_i|B)$$ and
-    $$P(A_i|A_1, \dots A_{i-1}, A_{i+1} \dots, A_n, B) = P(A_i|B)$$   
+    $$P(A_i|A_1, \dots , A_{i-1}, A_{i+1} \dots, A_n, B) = P(A_i|B)$$   
     This holds true for random variables as well. I used events just to remain in the realm of pure probability.
 
 ## What is Naive Bayes?
@@ -48,7 +51,8 @@ $$P(C_{+}|X_1,\dots ,X_n) > P(C_{-}|X_1,\dots ,X_n)$$ The opposite holds for the
 That's where "Bayes" comes into play. From Bayes' theorem, we know that 
 $$P(C_k|X_1, \dots, X_n) = \frac{P(X_1, \dots, X_n|C_k)P(C_k)}{P(X_1, \dots, X_n)}$$
 
-We can notice that our $evidence$, i.e. the denominator, does not depend on the class variable $C_k$ and it is always constant. So we can drop the denominator and introduce a proportionality, instead of keeping an equality. This change will not affect at all the the ability to classify correctly the class variable. So we are left with 
+We can notice that our $evidence$, i.e. the denominator, does not depend on the class variable $C_k$ and it is always constant. So we can drop the denominator and introduce a proportionality, instead of keeping an equality. This change will not affect at all the the ability to classify correctly the class variable. The model arrives at the correct classification as long as the correct class is more probable than any other class; hence class probabilities do not have to be estimated very well.
+So we are left with 
 $$P(C_k|X_1, \dots, X_n) \propto P(X_1, \dots, X_n|C_k)P(C_k)$$
 
 That's where the "Naive" assumption comes into play: we assume that the observations $X_1, \dots, X_n$ are conditionally independent given the class variable $C_k$.
@@ -59,7 +63,7 @@ We'll see lateron on why this assumption is called "naive", but with some though
 It turns out the the final probabilistic model of Naive Bayes is the following:
 $$P(C_k|X_1, \dots, X_n) \propto P(C_k) \prod_{i = 1}^{n}P(X_i|C_k)$$
 
-If you feel confused, go on reading. I will show you an example that will hopefully clear your mind. In addition do not forget to check the code of the project at the end!
+If you feel confused, go on reading. I will show you an example that will hopefully clear your mind. In addition do not forget to check the code of the project!
 
 ## Project Procedure
 
@@ -158,5 +162,13 @@ So, given the updated probability values, we can now classify the message as "sp
 In addition, a limitation of the Naive Bayes model is the naive assumption itself. In fact, it is called "Naive", because it is unlikely that the observations are independent in the real-world. For instance, we know that "I like pizza a lot", and "pizza a like I lot" are two different sentences because order matters. But the algorithm treats the two sentences as the same, due to the conditional independence assumption.
 
 ## Findings
+**TBA**
 
 ## Methods of Improvement
+* It would be interesting to apply a Logistic Regression (LR) and see how it performs differently. Indeed, when the classification is binary, Naive Bayes (NB) gets very close to LR. The intuitive difference is that LR directly estimates $P(C_k|\textbf{X})$, while NB estimates values for $P(C_k)$ and $P(\textbf{X}|C_k)$
+
+## Curiosities
+* Despite the strong assumption that we make on independence, Naive Bayes still performs fairly well in tasks like documnet classification and spam filtering. You can find a deep explation in [this paper](https://www.cs.unb.ca/~hzhang/publications/FLAIRS04ZhangH.pdf). Otherwise, you can have a read at the next point.
+* I copy the extract from an [article](https://serokell.io/blog/naive-bayes-classifiers) I found online on Bayesian poisoning: `Bayesian poisoning is a technique used by email spammers to try to reduce the effectiveness of spam filters that use Bayes’ rule. They hope to increase the rate of false positives of the spam filter by turning previously innocent words into spam words in a Bayesian database. Adding words that were more likely to appear in non-spam emails is effective against a naive Bayesian filter and allows spam to slip through. However, retraining the filter effectively prevents all types of attacks. That is why Naive Bayes is still being used for spam detection, along with certain heuristics such as blacklist`
+* The true applications of Naive Bayes in spam filtering can reach a much higher level of complexity!
+

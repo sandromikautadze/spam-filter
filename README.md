@@ -16,7 +16,7 @@
 
 We know that spam is usually related to emails. But spam can occur also in text messages! The following project is a spam filter that classifies text messages as spam or non-spam using a Naive Bayes algorithm.
 
-This README is more of an introduction to the model, with a short summary of the results of the project at the end. Throughout the file and the project I will refer to myself as "we". Please, bear in mind that there no "we", it's just me.
+This README is more of an introduction to the model, with a short summary of the results of the project at the end. Throughout the file and the project I will refer to myself as "we". Please, bear in mind that there's no "we", it's just me.
 
 ## Some Necessary Math Review
 

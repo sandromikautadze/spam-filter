@@ -1,6 +1,6 @@
 # Spam Filter Using Naive Bayes
 
-**NOTE**: *when viewed from a phone, this file may **not** be displayed at its best due to the formatting of some math formulas. It is suggested to view the file from a computer.*
+***PS**: this file may **not** be displayed at its best when viewed from a phone, due to the formatting of some math formulas. It is suggested to view it from a computer.*
 
 ### Table of Contents
 * [Introduction](#introduction)
@@ -9,13 +9,14 @@
 * [Project Procedure](#project-procedure)
     * [Example](#example)
 * [Limitations of the Naive Bayes model](#limitations-of-the-naive-bayes-model)
-* [Findings](#findings)
-* [Methods of Improvement](methods-of-improvement)
+* [Results](#results)
 * [Curiosities](#curiosities)
 
 ## Introduction
 
-**TBA**
+We know that spam is usually related to emails. But spam can occur also in text messages! The following project is a spam filter that classifies text messages as spam or non-spam using a Naive Bayes algorithm.
+
+This README is more of an introduction to the model, with a short summary of the results of the project at the end. Throughout the file and the project I will refer to myself as "we". Please, bear in mind that there no "we", it's just me.
 
 ## Some Necessary Math Review
 
@@ -25,7 +26,7 @@ Let's do some review of the crucial topics needed to understand what Naive Bayes
     $$P(A|B) = \frac{P(A \cap B)}{P(B)}$$
 * **Law of Total Probability (LTT)**: If  $A$ is an event of a sample space $\Omega$, and $B_n$ is a partition of $\Omega$, then
     $$P(A) = \sum_{i = 1}^{n}P(A \cap B_i) = \sum_{i = 1}^{n}P(A|B_i)P(B_i) $$
-* **Bayes' Theorem**: If $A$ and $B$ are two events of a sample space $\Omega$, with $P(B)>0$, then
+* **Bayes' Theorem**: If $A$ and $B$ are two events of a sample space $\Omega$, with $P(A)>0$, then
     $$P(B|A) = \frac{P(A|B)P(B)}{P(A)}$$ In Bayesian terms we can also state the theorem as
     $$posterior = \frac{likelihood \cdot prior}{evidence}$$ Using LTT we can also restate the theorem in another form:
     $$P(B_i|A) = \frac{P(A|B_i)P(B_i)}{P(A)} = \frac{P(A|B_i)P(B_i)}{\sum_{j\in \{1,\dots,n\} } P(A|B_j)P(B_j)}$$
@@ -58,7 +59,7 @@ $$P(C_k|X_1, \dots, X_n) \propto P(X_1, \dots, X_n|C_k)P(C_k)$$
 That's where the "Naive" assumption comes into play: we assume that the observations $X_1, \dots, X_n$ are conditionally independent given the class variable $C_k$.
 Hence, $$P(X_1, \dots, X_n|C_k)P(C_k) = P(C_k) \prod_{i = 1}^{n}P(X_i|C_k)$$
 
-We'll see lateron on why this assumption is called "naive", but with some thought you might guess the reason why.
+We'll see later on why this assumption is called "naive", but with some thought you might guess the reason why.
 
 It turns out the the final probabilistic model of Naive Bayes is the following:
 $$P(C_k|X_1, \dots, X_n) \propto P(C_k) \prod_{i = 1}^{n}P(X_i|C_k)$$
@@ -128,21 +129,27 @@ We can see that "code" and "unlock" are not in the vocabulary, "money" appears o
 Again, calculating the probabilities, we have
 
 $$P(Spam) = \frac{1}{2}$$
+
 $$P(Non\ Spam) = \frac{1}{2}$$
+
 $$P(the|Spam) = \frac{0}{7}$$
+
 $$P(money|Non\ Spam) = \frac{0}{9}$$
 
 This is enough for us to show that using Naive Bayes we get
 $$P(Spam|secret, code, to, unlock, the, money) = 0$$
 $$P(Non\ Spam|secret, code, to, unlock, the, money) = 0$$
 
-This is problematic: both values yield 0. To solve this issue, we do what is called **additive soothing**. Additive soothing is correction we do to our data, such data no value has a frequency of value zero. We do so by adding a smoothing parameter $\alpha$.
+This is problematic: both values yield 0. To solve this issue, we do what is called **additive smoothing**. This is a correction we do to our data, such data no value has a frequency of value 0. We do so by adding a smoothing parameter $\alpha$.
 
 Let's try to understand a bit more. Normally, we have that the probability of event $i$ is $p_i = \frac{x_i}{N}$, where $x_i$ is the frequency of element $i$, and $N$ is the cardinality of our sample space. Our smoothed probability is defined as
 $$p_i = \frac{x_i + \alpha}{N + \alpha \cdot d}$$
 In this case $d$ would represent the dimension of the vocabulary, so $d = 9$ in our example set.
 
-We will let $\alpha = 1$. When the parameter takes value one, we also call the procedure Laplace smoothing. As a side-effect, though, this smoothing increases the probability of those elements with 0 probability, but it doesn't change the probability of non-zero events. To avoid this issue, we apply Laplace soothing to all observations in the dataset.
+We will let $\alpha = 1$. When the parameter takes value one, we also call the procedure Laplace smoothing.
+
+As a side-effect, though, this smoothing increases the probability of those elements with 0 probability, but it doesn't change the probability of non-zero events. To avoid this issue, we apply Laplace soothing to all observations in the dataset. In other words, we increase the frequency of all words by $\alpha$.
+
 Let's look at how the probabilities change, after applying $\alpha = 1$
 $$P(the|Spam) = \frac{0 + 1}{7 + 1\cdot 9} = \frac{1}{16}$$
 $$P(money|Non\ Spam) = \frac{0 + 1}{9 + 1\cdot 9} = \frac{1}{18}$$
@@ -161,14 +168,11 @@ So, given the updated probability values, we can now classify the message as "sp
 
 In addition, a limitation of the Naive Bayes model is the naive assumption itself. In fact, it is called "Naive", because it is unlikely that the observations are independent in the real-world. For instance, we know that "I like pizza a lot", and "pizza a like I lot" are two different sentences because order matters. But the algorithm treats the two sentences as the same, due to the conditional independence assumption.
 
-## Findings
-**TBA**
-
-## Methods of Improvement
-* It would be interesting to apply a Logistic Regression (LR) and see how it performs differently. Indeed, when the classification is binary, Naive Bayes (NB) gets very close to LR. The intuitive difference is that LR directly estimates $P(C_k|\textbf{X})$, while NB estimates values for $P(C_k)$ and $P(\textbf{X}|C_k)$
+## Results
+We ended up building a model with almost 99% accuracy. Some improvements can be done. See code for more on this.
 
 ## Curiosities
-* Despite the strong assumption that we make on independence, Naive Bayes still performs fairly well in tasks like documnet classification and spam filtering. You can find a deep explation in [this paper](https://www.cs.unb.ca/~hzhang/publications/FLAIRS04ZhangH.pdf). Otherwise, you can have a read at the next point.
+* Despite the strong assumption that we make on independence, Naive Bayes still performs fairly well in tasks like document classification and spam filtering. You can find a deep explation in [this paper](https://www.cs.unb.ca/~hzhang/publications/FLAIRS04ZhangH.pdf).
 * I copy the extract from an [article](https://serokell.io/blog/naive-bayes-classifiers) I found online on Bayesian poisoning: `Bayesian poisoning is a technique used by email spammers to try to reduce the effectiveness of spam filters that use Bayes’ rule. They hope to increase the rate of false positives of the spam filter by turning previously innocent words into spam words in a Bayesian database. Adding words that were more likely to appear in non-spam emails is effective against a naive Bayesian filter and allows spam to slip through. However, retraining the filter effectively prevents all types of attacks. That is why Naive Bayes is still being used for spam detection, along with certain heuristics such as blacklist`
 * The true applications of Naive Bayes in spam filtering can reach a much higher level of complexity!
 

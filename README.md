@@ -1,6 +1,8 @@
 # Spam Filter Using Naive Bayes
 
-***PS**: this file may **not** be displayed at its best when viewed from a phone, due to the formatting of some math formulas. It is suggested to view it from a computer.*
+***PS**
+* *This file may **not** be displayed at its best when viewed from a phone, due to the formatting of some math formulas. It is suggested to view it from a computer.*
+* *I'm aware that some math formulas are showed in their latex format while others show up correctly. I'm trying to solve this issue.*
 
 ### Table of Contents
 * [Introduction](#introduction)

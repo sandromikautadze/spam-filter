@@ -2,7 +2,6 @@
 
 ***PS**
 * *This file may **not** be displayed at its best when viewed from a phone, due to the formatting of some math formulas. It is suggested to view it from a computer.*
-* *I'm aware that some math formulas are showed in their latex format while others show up correctly. I'm trying to solve this issue.*
 
 ### Table of Contents
 * [Introduction](#introduction)
@@ -50,7 +49,7 @@ Let's do some review of the crucial topics needed to understand what Naive Bayes
 Naive Bayes is a probabilistic model based on Bayes' theorem. It is used in machine learning for classification problems. 
 
 In a typical classification problem, we are given some observations $X_1, X_2, \dots, X_n$ and a class variable $C_k$, where $k$ represents a possible outcome of the classification.
-For demonstration purposes assume that the outcome is binary, each outcome denoted by $+$ and $-$. That is $K = \{+, - \}$.
+For demonstration purposes assume that the outcome is binary, each outcome denoted by $+$ and $-$. That is $K = \{ +, - \}$.
 
 The Naive Bayes classifier assigns a class label $k\in K$ to our observations. Technically speaking, it assigns a value to
 $$P(C_k|X_1, \dots, X_n)\ \forall k\in K$$
